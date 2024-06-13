@@ -33,4 +33,27 @@ SELECT
     ) AS formatted_time
 FROM time_data;
 
+DROP PROCEDURE IF EXISTS print_even_numbers;
+
+DELIMITER //
+
+CREATE PROCEDURE print_even_numbers()
+BEGIN
+    DECLARE i INT DEFAULT 2;
+    CREATE TEMPORARY TABLE EvenNumbers (even_number INT);
+
+    WHILE i <= 10 DO
+        INSERT INTO EvenNumbers (even_number) VALUES (i);
+        SET i = i + 2;
+    END WHILE;
+
+    -- Выборка данных из временной таблицы
+    SELECT even_number FROM EvenNumbers;
+
+    -- Удаление временной таблицы
+    DROP TEMPORARY TABLE EvenNumbers;
+END //
+
+DELIMITER ;
+
 CALL print_even_numbers();
